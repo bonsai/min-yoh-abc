@@ -1,6 +1,23 @@
 # min-yoh-abc
 
-日本の民謡を ABC notation で記録し、検索・再生できる形にしていくプロジェクトです。
+日本の民謡を ABC notation で記録し、遊びながら曲の背景も深掘りするプロジェクトです。
+
+## ブラウザゲーム：どじょうすくい
+
+Next.js の画面でどじょうをタップして捕まえる、かわいいミニゲームです。Hono API はヘルスチェック、民謡の豆知識、プレイ結果の受け取りを担当します。
+
+### 起動
+
+Node.js 20.9 以上を用意して、リポジトリのルートで実行します。
+
+```sh
+npm install
+npm run dev
+```
+
+- ゲーム画面: http://localhost:3000
+- Hono API: http://localhost:8787/health
+- API の豆知識: http://localhost:8787/api/game/tip
 
 ## 曲目
 
@@ -12,6 +29,13 @@
 - 確認できていない音符を推測で埋めず、採譜状況を明記する。
 - 歌詞・踊り・地域的な歌い回しは、旋律データと区別して記録する。
 - ABC ファイルは曲ごとに `abc/` へ置く。
+
+## 技術構成
+
+- Frontend: Next.js App Router / React / TypeScript
+- API: Hono + Node adapter
+- UI: CSS、モバイル対応
+- Game: クライアント側の状態管理。プレイ結果を Hono API に送信
 
 ## ABC notation
 
