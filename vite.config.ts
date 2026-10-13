@@ -1,6 +1,7 @@
 import { defineConfig } from "vite-plus";
 
 export default defineConfig({
+  base: "/min-yoh-abc/",
   root: "apps/web",
   server: {
     port: 5173,
