@@ -41,7 +41,7 @@ export default {
    if (path === "/api/results" && request.method === "GET") {
     const campaignId = url.searchParams.get("campaignId");
     if (!campaignId) return fail("campaignId is required");
-    const { results } = await env.DB.prepare("SELECT s.id,s.title,s.region,COUNT(vc.song_id) AS votes FROM campaign_songs cs JOIN songs s ON s.id=cs.song_id LEFT JOIN vote_choices vc ON vc.song_id=s.id LEFT JOIN votes v ON v.id=vc.vote_id AND v.campaign_id=cs.campaign_id WHERE cs.campaign_id=? GROUP BY s.id ORDER BY votes DESC,s.title").bind(campaignId).all();
+    const { results } = await env.DB.prepare("SELECT s.id,s.title,s.region,COUNT(v.id) AS votes FROM campaign_songs cs JOIN songs s ON s.id=cs.song_id LEFT JOIN vote_choices vc ON vc.song_id=s.id LEFT JOIN votes v ON v.id=vc.vote_id AND v.campaign_id=cs.campaign_id WHERE cs.campaign_id=? GROUP BY s.id ORDER BY votes DESC,s.title").bind(campaignId).all();
     const total = await env.DB.prepare("SELECT COUNT(*) AS count FROM votes WHERE campaign_id=?").bind(campaignId).first();
     return json({ campaignId, totalVotes: total.count, results });
    }
