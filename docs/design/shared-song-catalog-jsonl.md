@@ -1,4 +1,4 @@
-# Shared song catalog: MyoABC API → Neo Minyo Land
+# Shared song catalog: Minyo ABC API → Neo Minyo Land
 
 ## Decision
 
@@ -6,7 +6,14 @@
 - Neo Minyo Land reads public song metadata from `GET /api/songs.jsonl`.
 - The API format is JSONL / NDJSON: one JSON object per line.
 - Neo Minyo Land owns only map/game metadata: location key, `songId`, map coordinates, and game link.
+- The public endpoint returns only `published` songs.
 - No vote records, LINE identifiers, or raw recommendations are exposed by the song endpoint.
+
+## API contract
+
+The provider-side OpenAPI 3.1 contract is maintained at [`worker/openapi.yaml`](../../worker/openapi.yaml).
+
+The endpoint responds with `application/x-ndjson; charset=utf-8`. Each non-empty line is one Song object; the response is not a JSON array. Song `id` values are stable identifiers and must match Land's `spots.json[].songId`.
 
 ## Public record
 
