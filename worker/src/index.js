@@ -32,6 +32,18 @@ export default {
   const url = new URL(request.url), path = url.pathname;
   try {
    if (path === "/api/health") return json({ ok: true });
+   if (path === "/api/songs.jsonl" && request.method === "GET") {
+    const { results } = await env.DB.prepare(
+      "SELECT id,title,region,area,description,source_url,status FROM songs WHERE status != 'retired' ORDER BY title COLLATE NOCASE"
+    ).all();
+    const body = results.map(song => JSON.stringify(song)).join("\n") + (results.length ? "\n" : "");
+    return new Response(body, { status: 200, headers: {
+      "content-type": "application/x-ndjson; charset=utf-8",
+      "cache-control": "public, max-age=60, s-maxage=300",
+      "access-control-allow-origin": "*",
+      "access-control-allow-methods": "GET, OPTIONS"
+    }});
+   }
    if (path === "/api/campaign" && request.method === "GET") {
     const campaign = await env.DB.prepare("SELECT id,title,status,magazine_issue_id,max_songs_per_vote,starts_at,ends_at FROM campaigns WHERE status='active' LIMIT 1").first();
     if (!campaign) return json({ campaign: null, songs: [] });
