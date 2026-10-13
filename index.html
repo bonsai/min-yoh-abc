@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#263d36">
+<meta name="description" content="民謡の書誌情報を曲ごとに記録・編集する教材／出版プロジェクト。Webの26曲と、収録曲を考える人気投票を公開しています。">
+<title>民謡ABC｜プロジェクト</title>
+<style>
+:root{--paper:#f7f2e8;--ink:#24251f;--muted:#716d61;--green:#263d36;--red:#b84935;--line:#ded6c7;--card:#fffdf8}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans JP",sans-serif;line-height:1.85}
+header{background:var(--green);color:var(--card);padding:56px 22px 48px}header .eyebrow{letter-spacing:.16em;color:#e7c99b;font-size:.78rem}h1{font-size:clamp(2.2rem,8vw,4.2rem);line-height:1.12;letter-spacing:-.04em;margin:.7rem 0 1rem}header p{max-width:660px;color:#e7e5d9;margin:0}
+main{max-width:900px;margin:auto;padding:26px 18px 80px}.paper{background:var(--card);border:1px solid var(--line);padding:clamp(20px,5vw,42px);border-radius:18px;margin:20px 0}.kicker{font-size:.8rem;letter-spacing:.12em;color:var(--red);font-weight:800}.intro{font-size:1.1rem}
+.entries{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr));gap:12px;margin-top:18px}
+.entries a{display:block;text-decoration:none;color:inherit;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 20px;transition:border-color .15s,transform .15s}
+.entries a:hover{border-color:var(--red);transform:translateY(-2px)}
+.entries .label{font-size:.72rem;letter-spacing:.14em;color:var(--muted);font-weight:800}
+.entries strong{display:block;font-size:1.4rem;letter-spacing:-.02em;margin:.4rem 0 .3rem}
+.entries small{display:block;color:var(--muted);font-size:.92rem}
+.entries .arrow{color:var(--red);font-weight:800;margin-top:10px;display:inline-block}
+.notice{background:#fff7e7;border:1px solid #dfc9a4;padding:14px 16px;border-radius:12px;font-size:.9rem;margin-top:4px}
+.links{display:flex;flex-wrap:wrap;gap:14px;margin-top:18px}.links a{color:var(--red);font-weight:700;text-decoration:none;font-size:.92rem}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding-top:20px;margin-top:36px}
+</style>
+</head>
+<body>
+<header>
+  <div class="eyebrow">MYOABC · FOLK SONG PROJECT</div>
+  <h1>民謡の記録と<br>26曲を考える。</h1>
+  <p>日本の民謡を、曲ごとの資料として記録・編集するための教材／出版リポジトリです。旋律は信頼できる楽譜・録音を参照して採譜し、確認できていない音符は推測で埋めません。</p>
+</header>
+<main>
+  <div class="paper">
+    <div class="kicker">公開中の試作</div>
+    <p class="intro">いま公開しているのは、画面試作の2点です。いずれも制作途中のため、記載内容は未完成です。</p>
+    <div class="entries">
+      <a href="./magazine/">
+        <span class="label">WEB BOOK</span>
+        <strong>26曲を読む</strong>
+        <small>地域・由来・歌われる場面をたどる、ブラウザで読む本。26曲の目次と解説の試読。</small>
+        <span class="arrow">読む →</span>
+      </a>
+      <a href="./vote/">
+        <span class="label">VOTING · PWA</span>
+        <strong>みんなで選ぶ26曲</strong>
+        <small>書籍収録曲を考える人気投票の試作。スマホ対応・ホーム画面に追加できます。</small>
+        <span class="arrow">投票する →</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="paper">
+    <div class="kicker">重要：現状の制限</div>
+    <div class="notice">
+      <p><strong>投票の集計は未実装です。</strong>選択内容はブラウザーの localStorage にのみ保存され、主催者サーバーへは送信されません。現時点で順位は算出されません。</p>
+      <p style="margin-bottom:0"><strong>26曲は暫定候補です。</strong>100曲の正式リストではありません。曲名・地域表記・由来・出典は未確認を含みます。</p>
+    </div>
+    <div class="links">
+      <a href="https://github.com/bonsai/min-yoh-abc">→ GitHub リポジトリ（設計文書・曲データ）</a>
+      <a href="https://github.com/bonsai/min-yoh-abc/blob/main/docs/adr/0001-voting-api-jsonl-gas-github-actions.md">→ ADR-0001 投票API構成</a>
+    </div>
+  </div>
+
+  <footer>民謡ABC｜公開中の内容は制作途中の試作です。旋律データの出典と確認状況はリポジトリ側で管理しています。</footer>
+</main>
+</body></html>
