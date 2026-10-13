@@ -1,4 +1,4 @@
-name: Deploy frontend to GitHub Pages
+name: Deploy static frontend to GitHub Pages
 
 on:
   push:
@@ -30,17 +30,8 @@ jobs:
         with:
           node-version: 22
 
-      - name: Install Vite+
-        run: npm install --global vite-plus
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build static frontend only
-        run: npm run build
-
       - name: Add no-Jekyll marker
-        run: touch dist/.nojekyll
+        run: touch apps/web/.nojekyll
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
@@ -48,7 +39,7 @@ jobs:
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: apps/web
 
   deploy:
     environment:
