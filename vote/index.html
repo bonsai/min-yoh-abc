@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#f7f2e8">
-<title>民謡ABC｜みんなで選ぶ26曲</title>
+<title>民謡ABC｜100曲から選ぶ26曲</title>
 <style>
 :root{--paper:#f7f2e8;--ink:#24251f;--muted:#6c6c61;--red:#b84935;--line:#ded6c7;--card:#fffdf8}
 *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans JP",sans-serif;line-height:1.65}
@@ -18,10 +18,10 @@ main{max-width:900px;margin:auto;padding:24px 18px 100px}.intro{display:flex;gap
 </style>
 </head>
 <body>
-<header><div class="eyebrow">MYOABC · COMMUNITY VOTE</div><h1>あなたが選ぶ、<br>民謡の世界。</h1><p>本『民謡ABC』に収録する厳選26曲を決めるための候補投票です。好きな曲、次の世代に伝えたい曲を選んでください。</p></header>
+<header><div class="eyebrow">MYOABC · COMMUNITY VOTE</div><h1>100曲から選ぶ、<br>民謡の世界。</h1><p>本『民謡ABC』の表の26曲を決める人気投票の試作ページです。もうひとつの「秘密の26曲」は、この投票とは別に編集企画として選び、投票ページには掲載しません。</p></header>
 <main>
-<div class="intro"><div><strong>あなたが本に残したい民謡は？</strong><br><span class="fine">最大5曲まで選べます。曲名を検索して探すこともできます。</span></div><div class="count" id="counter" aria-live="polite">0 / 5 曲</div></div>
-<div class="notice">📌 このページは投票画面の試作版です。選んだ内容はこの端末のブラウザー内に保存されます。現時点では、主催者に票が送信されたり、全員の票が集計されたりはしません。</div>
+<div class="intro"><div><strong>あなたが本に残したい民謡は？</strong><br><span class="fine">候補リストから最大5曲まで選べます。現在は画面・操作の試作候補のみで、100曲の正式リストはまだ準備中です。</span></div><div class="count" id="counter" aria-live="polite">0 / 5 曲</div></div>
+<div class="notice">📌 このページは投票画面の試作版です。候補はまだ100曲そろっていません。選んだ内容はこの端末のブラウザー内に保存されるだけで、主催者に送信・集計されません。秘密の26曲は公開候補・投票データに含めません。</div>
 <div class="tools"><input id="search" type="search" placeholder="曲名・地域で検索…" aria-label="曲名・地域で検索"><select id="region" aria-label="地域で絞り込む"><option value="">すべての地域</option><option>北海道・東北</option><option>関東</option><option>中部・北陸</option><option>近畿</option><option>中国</option><option>四国</option><option>九州・沖縄</option><option>全国・地域未確定</option></select></div>
 <form id="voteForm"><div class="grid" id="songs"></div><div class="actions"><p id="actionText">気になる曲を選んでください。</p><button id="submit" type="submit" disabled>選んだ曲を保存する ↗</button></div></form>
 <section class="result" id="result" hidden aria-live="polite"><h2>選んだ曲 🎵</h2><div id="chosen"></div><p class="fine">この内容はこの端末に保存された控えです。共有投票の集計結果ではありません。</p><button id="clear" type="button">選択をやり直す</button></section>
