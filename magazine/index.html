@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#263d36">
+<title>民謡ABC｜26曲を読む</title>
+<style>
+:root{--paper:#f7f2e8;--ink:#24251f;--muted:#716d61;--green:#263d36;--red:#b84935;--line:#ded6c7;--card:#fffdf8}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans JP",sans-serif;line-height:1.85}
+header{background:var(--green);color:var(--card);padding:48px 22px 42px}header .eyebrow{letter-spacing:.16em;color:#e7c99b;font-size:.78rem}h1{font-size:clamp(2.4rem,9vw,5rem);line-height:1.12;letter-spacing:-.04em;margin:.7rem 0 1rem}header p{max-width:660px;color:#e7e5d9;margin:0}
+main{max-width:900px;margin:auto;padding:26px 18px 80px}.paper{background:var(--card);border:1px solid var(--line);padding:clamp(20px,5vw,42px);border-radius:18px;margin:20px 0}.kicker{font-size:.8rem;letter-spacing:.12em;color:var(--red);font-weight:800}.intro{font-size:1.1rem}.notice{background:#fff7e7;border:1px solid #dfc9a4;padding:14px 16px;border-radius:12px;font-size:.9rem}.toc{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,245px),1fr));gap:10px}.toc a{display:block;text-decoration:none;color:inherit;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px}.toc a:hover{border-color:var(--red)}.toc small{display:block;color:var(--muted)}article{scroll-margin-top:16px}.article-head{border-bottom:1px solid var(--line);padding-bottom:16px;margin-bottom:18px}.article-head h2{font-size:clamp(1.7rem,5vw,2.5rem);line-height:1.3;margin:.3rem 0}.region{color:var(--muted);font-size:.92rem}.article-body{max-width:68ch}.placeholder{color:var(--muted);font-size:.92rem;background:#f4efe5;padding:12px 14px;border-radius:8px}.nav{display:flex;justify-content:space-between;gap:12px;margin-top:22px}.nav a,.back{color:var(--red);font-weight:700;text-decoration:none}footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding-top:20px;margin-top:36px}
+</style>
+</head>
+<body>
+<header><div class="eyebrow">MYOABC · DIGITAL BOOK</div><h1>民謡ABC<br>26曲を読む。</h1><p>土地の暮らしや仕事、人の集まりから生まれてきた民謡。目次から曲を選び、ひとつずつ読み進めるWebの本です。</p></header>
+<main>
+<div class="paper">
+<div class="kicker">この本について</div>
+<p class="intro">一曲の向こうには、その土地の風景や暮らしがあります。曲名を入口に、地域、由来、歌われる場面、音楽の特徴をたどっていきます。</p>
+<div class="notice" id="accessNotice">閲覧権限の確認は投票API接続後に有効になります。現在は読書ページの画面試作です。URLを知っている人を制限する認証機能は、まだ接続されていません。</div>
+</div>
+<section class="paper" id="contents"><div class="kicker">CONTENTS</div><h2>目次</h2><p>曲名を選ぶと解説へ移動します。</p><div class="toc" id="toc"></div></section>
+<div id="chapters"></div>
+<footer>民謡ABC｜曲目は現在の投票試作にある26曲をもとにした仮目次です。解説が未完成の曲は、内容を推測で補わず「執筆準備中」と表示しています。参考資料の確認後に順次更新します。</footer>
+</main>
+<script>
+const songs=[
+["安来節","島根県・安来地方","安来節は島根県を代表する民謡のひとつで、「どじょうすくい」の唄としても広く知られています。歌い回しや囃子を含む演奏形があり、どの録音・楽譜を基準にするかによって記録すべき特徴が変わります。"],
+["こきりこ節","富山県・五箇山","五箇山に伝わる民謡として知られ、地域の芸能や祭りと結びついて伝承されてきました。楽器や踊り、歌われる場面を資料と照らし合わせながら紹介していきます。"],
+["あんたがたどこさ","熊本県ゆかりの手まり歌","まりつき遊びとともに親しまれてきたわらべ歌です。歌詞の問いかけと応答、遊びの動きに注目すると、歌が暮らしの中でどう使われてきたかが見えてきます。"],
+["ソーラン節","北海道","ニシン漁の作業歌として知られる民謡です。掛け声や力強いリズムには、共同作業の動きと結びついた特徴があります。"],
+["江差追分","北海道・江差","北海道の江差を代表する民謡で、独特の節回しが大きな特徴です。歌い手による表現の違いも含め、音源と伝承の資料をもとに読み解きます。"],
+["津軽じょんがら節","青森県","津軽三味線の演奏と結びついて広く知られる民謡です。歌と器楽の関係、地域ごとの伝承や演奏様式に目を向けます。"],
+["南部牛追唄","岩手県","牛を引いて荷物を運ぶ仕事と結びつけて語られる岩手の民謡です。土地の道や仕事の風景を手がかりに、歌の背景をたどります。"],
+["秋田音頭","秋田県","秋田の祝いの場などで親しまれてきた民謡です。歌詞の言葉遊びや囃子、踊りとの関わりに注目します。"],
+["花笠音頭","山形県","花笠を使う踊りとともに知られる山形の民謡です。地域の祭りや踊りの広がりとあわせて紹介します。"],
+["会津磐梯山","福島県","会津地方を代表する民謡のひとつです。歌詞に登場する土地や人物、盆踊りとのつながりを資料から確認します。"],
+["八木節","群馬県・栃木県","北関東で親しまれてきた民謡で、口説き調の歌と賑やかな囃子が特徴です。祭りや踊りの場での演じ方も見どころです。"],
+["木更津甚句","千葉県","木更津に伝わる甚句のひとつです。港町の歴史や歌の伝承について、地域資料を参照しながら解説します。"],
+["ちゃっきり節","静岡県","静岡の茶どころと結びついて知られる新民謡です。歌が作られた時代背景と、地域のイメージを広める役割を見ていきます。"],
+["越中おわら節","富山県","富山県八尾の「おわら風の盆」と深く結びついた民謡です。歌、三味線、胡弓、踊りがつくる独特の雰囲気を紹介します。"],
+["山中節","石川県・山中温泉","山中温泉に伝わる民謡で、土地の言葉や節回しが魅力です。温泉場の文化と歌の伝承をたどります。"],
+["郡上おどり（かわさき）","岐阜県・郡上八幡","郡上おどりで歌われる曲のひとつです。踊り手と歌い手が場を共有する、盆踊りならではの参加型の文化に注目します。"],
+["伊勢音頭","三重県","伊勢参りや旅人の文化と結びついて広まった音頭です。地域ごとの歌い方や、旅と芸能のつながりを紹介します。"],
+["河内音頭","大阪府・河内地域","河内地域で発展した音頭で、語り物の要素を持つ演唱でも知られます。地域の盆踊りや現代の音頭文化との関係を見ていきます。"],
+["串本節","和歌山県・串本","和歌山県串本に伝わる民謡です。海辺の暮らしや土地の風景を手がかりに、歌詞と伝承を紹介します。"],
+["音戸の舟唄","広島県","船や海の仕事と結びついて知られる広島の舟唄です。掛け声や節回しに、作業歌としての特徴がどう表れるかをたどります。"],
+["貝殻節","鳥取県","鳥取県の浜村周辺に伝わる民謡として知られます。漁の仕事と歌の関係、地域で受け継がれる表現を紹介します。"],
+["阿波踊り（よしこの）","徳島県","阿波踊りの掛け声として知られる「よしこの」。踊りのリズムと歌詞、祭りの場の一体感に注目します。"],
+["よさこい節","高知県","高知を代表する民謡のひとつで、よさこい祭りの文化とも結びついています。歌詞の背景や地域での受け止められ方をたどります。"],
+["黒田節","福岡県","酒宴の歌としても知られる福岡ゆかりの民謡です。歌詞にまつわる伝承と、各地に広がった歌の姿を資料から確認します。"],
+["炭坑節","福岡県","炭鉱の仕事や地域の盆踊りと結びついて広く知られる民謡です。労働の記憶がどのように踊りの歌として受け継がれてきたかを見ます。"],
+["鹿児島おはら節","鹿児島県","鹿児島を代表する民謡のひとつです。地域の踊りや祝いの場での歌われ方、歌詞の地域性を紹介します。"]
+];
+const toc=document.querySelector("#toc"),chapters=document.querySelector("#chapters");
+songs.forEach((s,i)=>{const id="song-"+String(i+1).padStart(2,"0");const a=document.createElement("a");a.href="#"+id;a.innerHTML="<small>CHAPTER "+String(i+1).padStart(2,"0")+"</small><strong>"+s[0]+"</strong><small>"+s[1]+"</small>";toc.append(a);
+const article=document.createElement("article");article.className="paper";article.id=id;article.innerHTML="<div class='article-head'><div class='kicker'>CHAPTER "+String(i+1).padStart(2,"0")+"</div><h2>"+s[0]+"</h2><div class='region'>"+s[1]+"</div></div><div class='article-body'><p>"+s[2]+"</p><p class='placeholder'>編集メモ：この紹介は初期の概要です。出版前に信頼できる地域資料・録音・楽譜を確認し、参考資料と確認状況を追記します。</p></div><div class='nav'><a href='#contents'>↑ 目次へ戻る</a><a href='#"+(i<songs.length-1?"song-"+String(i+2).padStart(2,"0"):"contents")+"'>"+(i<songs.length-1?"次の曲 →":"目次へ")+"</a></div>";chapters.append(article)});
+</script>
+</body></html>
