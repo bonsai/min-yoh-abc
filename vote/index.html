@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f7f2e8">
+<title>民謡ABC｜みんなで選ぶ26曲</title>
+<style>
+:root{--paper:#f7f2e8;--ink:#24251f;--muted:#6c6c61;--red:#b84935;--line:#ded6c7;--card:#fffdf8}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans JP",sans-serif;line-height:1.65}
+header{padding:42px 20px 30px;background:#263d36;color:#fffdf8}header .eyebrow{font-size:.8rem;letter-spacing:.16em;color:#e7c99b}h1{font-size:clamp(2rem,7vw,4rem);line-height:1.15;margin:.4rem 0 1rem;letter-spacing:-.04em}header p{max-width:680px;color:#e7e5d9;margin:0}
+main{max-width:900px;margin:auto;padding:24px 18px 100px}.intro{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;margin:4px 0 20px}.count{font-weight:800;white-space:nowrap;color:var(--red)}.notice{border:1px solid #dfc9a4;background:#fff7e7;border-radius:12px;padding:12px 14px;font-size:.9rem;margin:18px 0 22px}
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}input[type=search],select{border:1px solid var(--line);border-radius:10px;padding:11px;background:var(--card);font:inherit}input[type=search]{flex:1;min-width:180px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:12px}.song{display:flex;gap:12px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:15px;cursor:pointer;transition:border-color .15s,transform .15s}.song:hover{transform:translateY(-1px);border-color:#b9a98f}.song:has(input:checked){border:2px solid var(--red);padding:14px;background:#fff8f2}.song input{width:20px;height:20px;accent-color:var(--red);margin-top:5px;flex-shrink:0}.song strong{display:block;font-size:1.03rem}.song small{display:block;color:var(--muted);margin-top:3px}.num{font-size:.75rem;color:var(--red);font-weight:800;letter-spacing:.08em}
+.actions{position:sticky;bottom:10px;margin-top:24px;background:#263d36;color:white;border-radius:16px;padding:14px;display:flex;gap:12px;align-items:center;justify-content:space-between;box-shadow:0 8px 28px #0002}.actions p{margin:0;font-size:.9rem}.actions button{border:0;border-radius:10px;background:#f0c98e;color:#24251f;font:inherit;font-weight:800;padding:12px 16px;cursor:pointer}.actions button:disabled{opacity:.45;cursor:not-allowed}
+.result{margin-top:24px;border:1px solid var(--line);background:var(--card);padding:18px;border-radius:14px}.result h2{margin-top:0}.result[hidden]{display:none}.fine{font-size:.83rem;color:var(--muted)}footer{border-top:1px solid var(--line);padding-top:20px;margin-top:34px;color:var(--muted);font-size:.85rem}
+@media(max-width:480px){header{padding-top:30px}.actions{align-items:stretch;flex-direction:column}.actions button{width:100%}}
+</style>
+</head>
+<body>
+<header><div class="eyebrow">MYOABC · COMMUNITY VOTE</div><h1>あなたが選ぶ、<br>民謡の世界。</h1><p>本『民謡ABC』に収録する厳選26曲を決めるための候補投票です。好きな曲、次の世代に伝えたい曲を選んでください。</p></header>
+<main>
+<div class="intro"><div><strong>あなたが本に残したい民謡は？</strong><br><span class="fine">最大5曲まで選べます。曲名を検索して探すこともできます。</span></div><div class="count" id="counter" aria-live="polite">0 / 5 曲</div></div>
+<div class="notice">📌 このページは投票画面の試作版です。選んだ内容はこの端末のブラウザー内に保存されます。現時点では、主催者に票が送信されたり、全員の票が集計されたりはしません。</div>
+<div class="tools"><input id="search" type="search" placeholder="曲名・地域で検索…" aria-label="曲名・地域で検索"><select id="region" aria-label="地域で絞り込む"><option value="">すべての地域</option><option>北海道・東北</option><option>関東</option><option>中部・北陸</option><option>近畿</option><option>中国</option><option>四国</option><option>九州・沖縄</option><option>全国・地域未確定</option></select></div>
+<form id="voteForm"><div class="grid" id="songs"></div><div class="actions"><p id="actionText">気になる曲を選んでください。</p><button id="submit" type="submit" disabled>選んだ曲を保存する ↗</button></div></form>
+<section class="result" id="result" hidden aria-live="polite"><h2>選んだ曲 🎵</h2><div id="chosen"></div><p class="fine">この内容はこの端末に保存された控えです。共有投票の集計結果ではありません。</p><button id="clear" type="button">選択をやり直す</button></section>
+<footer>民謡ABC 100曲プロジェクト｜候補曲は編集用の仮リストです。地域・曲名・教科書掲載状況・出典を確認し、最終的な収録曲は投票結果と編集方針をもとに決定します。</footer>
+</main>
+<script>
+const songs=[
+["安来節","島根県・中国","中国"],["こきりこ節","富山県・五箇山","中部・北陸"],["あんたがたどこさ","熊本県ゆかりの手まり歌","九州・沖縄"],["ソーラン節","北海道","北海道・東北"],["江差追分","北海道","北海道・東北"],["津軽じょんがら節","青森県","北海道・東北"],["南部牛追唄","岩手県","北海道・東北"],["秋田音頭","秋田県","北海道・東北"],["花笠音頭","山形県","北海道・東北"],["会津磐梯山","福島県","北海道・東北"],["八木節","群馬県・栃木県","関東"],["木更津甚句","千葉県","関東"],["ちゃっきり節","静岡県","中部・北陸"],["越中おわら節","富山県","中部・北陸"],["山中節","石川県","中部・北陸"],["郡上おどり（かわさき）","岐阜県","中部・北陸"],["伊勢音頭","三重県","近畿"],["河内音頭","大阪府","近畿"],["串本節","和歌山県","近畿"],["音戸の舟唄","広島県","中国"],["貝殻節","鳥取県","中国"],["阿波踊り（よしこの）","徳島県","四国"],["よさこい節","高知県","四国"],["黒田節","福岡県","九州・沖縄"],["炭坑節","福岡県","九州・沖縄"],["鹿児島おはら節","鹿児島県","九州・沖縄"]];
+const list=document.querySelector("#songs"),counter=document.querySelector("#counter"),submit=document.querySelector("#submit"),actionText=document.querySelector("#actionText");
+const saved=new Set(JSON.parse(localStorage.getItem("myoabc-vote-draft")||"[]"));
+songs.forEach((s,i)=>{const label=document.createElement("label");label.className="song";label.dataset.search=(s[0]+" "+s[1]+" "+s[2]).toLowerCase();label.dataset.region=s[2];label.innerHTML='<input type="checkbox" value="'+i+'" aria-label="'+s[0]+'"><span><span class="num">CANDIDATE '+String(i+1).padStart(2,"0")+'</span><strong>'+s[0]+'</strong><small>'+s[1]+'</small></span>';label.querySelector("input").checked=saved.has(i);list.append(label)});
+function update(){const checked=[...list.querySelectorAll("input:checked")];counter.textContent=checked.length+" / 5 曲";submit.disabled=checked.length===0;actionText.textContent=checked.length===5?"5曲を選択中。保存できます。":checked.length+"曲を選択中。あと"+(5-checked.length)+"曲選べます。";list.querySelectorAll("input:not(:checked)").forEach(el=>el.disabled=checked.length>=5)}
+list.addEventListener("change",e=>{if(e.target.matches("input"))update()});
+function filter(){const q=document.querySelector("#search").value.toLowerCase().trim(),r=document.querySelector("#region").value;list.querySelectorAll(".song").forEach(el=>el.hidden=!(el.dataset.search.includes(q)&&(!r||el.dataset.region===r)))}
+document.querySelector("#search").addEventListener("input",filter);document.querySelector("#region").addEventListener("change",filter);
+document.querySelector("#voteForm").addEventListener("submit",e=>{e.preventDefault();const ids=[...list.querySelectorAll("input:checked")].map(el=>Number(el.value));localStorage.setItem("myoabc-vote-draft",JSON.stringify(ids));document.querySelector("#chosen").innerHTML=ids.map(i=>"<p>"+(i+1)+". "+songs[i][0]+" <span class='fine'>"+songs[i][1]+"</span></p>").join("");document.querySelector("#result").hidden=false;document.querySelector("#result").scrollIntoView({behavior:"smooth",block:"nearest"})});
+document.querySelector("#clear").addEventListener("click",()=>{list.querySelectorAll("input").forEach(el=>{el.checked=false;el.disabled=false});localStorage.removeItem("myoabc-vote-draft");document.querySelector("#result").hidden=true;update()});
+update();
+</script>
+</body></html>
