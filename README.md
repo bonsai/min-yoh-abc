@@ -1,58 +1,22 @@
-# min-yoh-abc
+# MyoABC
 
-日本の民謡を ABC notation で記録し、遊びながら曲の背景も深掘りするプロジェクトです。
+日本の民謡を、曲ごとの資料として記録・編集するための教材／出版物リポジトリです。
 
-## ブラウザゲーム：どじょうすくい
+## 役割
 
-どじょうをタップしてすくう、かわいいミニゲームです。45秒チャレンジ、ミッション、どじょう図鑑、安来節の豆知識を備えています。
-
-## 技術構成
-
-- Frontend: Vite+（`vp` CLI）+ TypeScript、軽量な DOM UI
-- API: Hono + Node adapter
-- Dev server: Vite+ が `apps/web` を配信し、`/api` と `/health` を Hono に proxy
-- UI: CSS、スマートフォン対応
-
-## 起動
-
-Vite+ の CLI（`vp`）をインストールしてから、リポジトリのルートで実行します。
-
-Windows PowerShell:
-
-```powershell
-irm https://vite.plus/ps1 | iex
-```
-
-macOS / Linux:
-
-```sh
-curl -fsSL https://vite.plus | bash
-```
-
-インストール後：
-
-```sh
-vp install
-npm run dev
-```
-
-- ゲーム画面: http://localhost:5173
-- Hono API: http://localhost:8787/health
-- API の豆知識: http://localhost:8787/api/game/tip
-
-Vite+ の開発・ビルド・チェックは `vp dev`、`vp build`、`vp check` でも実行できます。Hono API は並行して `npm run dev:api` で起動します。
+- 民謡の書誌情報、地域、由来、背景、参考資料を曲ごとに整理する。
+- ABC notation などの楽曲データを、確認状況と出典を明記して管理する。
+- 本、教材、記事などの出版コンテンツを作る。
+- ゲームやイベントなどの体験機能は、このリポジトリに含めず [Neo民謡ランド](https://github.com/bonsai/neo-minyo-land) 側で開発する。
 
 ## 曲目
 
 1. [安来節（どじょうすくい）](songs/001-yasugi-bushi.md)
 
-## 方針
+## 編集方針
 
 - 旋律は信頼できる楽譜・録音を参照して採譜し、出典を記録する。
 - 確認できていない音符を推測で埋めず、採譜状況を明記する。
 - 歌詞・踊り・地域的な歌い回しは、旋律データと区別して記録する。
-- ABC ファイルは曲ごとに `abc/` へ置く。
-
-## ABC notation
-
-ABC notation はテキストで旋律を表現する記法です。採譜を確認した曲から `abc/` に追加します。
+- ABC ファイルは曲ごとに `abc/` へ置き、確認状況と出典を添える。
+- ランド側とは、曲ID・教材ID・公開URLなどの参照情報で疎結合に連携する。
