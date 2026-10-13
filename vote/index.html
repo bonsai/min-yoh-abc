@@ -40,5 +40,13 @@ document.querySelector("#search").addEventListener("input",filter);document.quer
 document.querySelector("#voteForm").addEventListener("submit",e=>{e.preventDefault();const ids=[...list.querySelectorAll("input:checked")].map(el=>Number(el.value));localStorage.setItem("myoabc-vote-draft",JSON.stringify(ids));document.querySelector("#chosen").innerHTML=ids.map(i=>"<p>"+(i+1)+". "+songs[i][0]+" <span class='fine'>"+songs[i][1]+"</span></p>").join("");document.querySelector("#result").hidden=false;document.querySelector("#result").scrollIntoView({behavior:"smooth",block:"nearest"})});
 document.querySelector("#clear").addEventListener("click",()=>{list.querySelectorAll("input").forEach(el=>{el.checked=false;el.disabled=false});localStorage.removeItem("myoabc-vote-draft");document.querySelector("#result").hidden=true;update()});
 update();
+
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js").catch(error => {
+      console.warn("PWAのオフライン機能を登録できませんでした", error);
+    });
+  });
+}
 </script>
 </body></html>
