@@ -3,7 +3,7 @@ import { cors } from "hono/cors";
 import { serve } from "@hono/node-server";
 
 const app = new Hono();
-app.use("*", cors({ origin: ["http://localhost:3000"] }));
+app.use("*", cors({ origin: ["http://localhost:5173", "http://127.0.0.1:5173"] }));
 
 app.get("/health", (c) => c.json({ ok: true, service: "min-yoh-abc-api" }));
 app.get("/api/game/tip", (c) => c.json({
