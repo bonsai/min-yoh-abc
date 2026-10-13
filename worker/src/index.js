@@ -34,7 +34,7 @@ export default {
    if (path === "/api/health") return json({ ok: true });
    if (path === "/api/songs.jsonl" && request.method === "GET") {
     const { results } = await env.DB.prepare(
-      "SELECT id,title,region,area,description,source_url,status FROM songs WHERE status != 'retired' ORDER BY title COLLATE NOCASE"
+      "SELECT id,title,region,area,description,source_url,status FROM songs WHERE status = 'published' ORDER BY title COLLATE NOCASE"
     ).all();
     const body = results.map(song => JSON.stringify(song)).join("\n") + (results.length ? "\n" : "");
     return new Response(body, { status: 200, headers: {
