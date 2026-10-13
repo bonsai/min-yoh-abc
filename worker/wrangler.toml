@@ -1,0 +1,15 @@
+name = "min-yoh-abc-api"
+main = "src/index.js"
+compatibility_date = "2026-10-13"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "min-yoh-abc"
+database_id = "REPLACE_WITH_D1_DATABASE_ID"
+
+[vars]
+LINE_CHANNEL_ID = "REPLACE_WITH_LINE_LIFF_CHANNEL_ID"
+
+# Set secrets separately:
+# npx wrangler secret put USER_ID_SALT
+# npx wrangler secret put ADMIN_TOKEN
