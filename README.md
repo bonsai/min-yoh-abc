@@ -4,20 +4,43 @@
 
 ## ブラウザゲーム：どじょうすくい
 
-Next.js の画面でどじょうをタップして捕まえる、かわいいミニゲームです。Hono API はヘルスチェック、民謡の豆知識、プレイ結果の受け取りを担当します。
+どじょうをタップしてすくう、かわいいミニゲームです。45秒チャレンジ、ミッション、どじょう図鑑、安来節の豆知識を備えています。
 
-### 起動
+## 技術構成
 
-Node.js 20.9 以上を用意して、リポジトリのルートで実行します。
+- Frontend: Vite+（`vp` CLI）+ TypeScript、軽量な DOM UI
+- API: Hono + Node adapter
+- Dev server: Vite+ が `apps/web` を配信し、`/api` と `/health` を Hono に proxy
+- UI: CSS、スマートフォン対応
+
+## 起動
+
+Vite+ の CLI（`vp`）をインストールしてから、リポジトリのルートで実行します。
+
+Windows PowerShell:
+
+```powershell
+irm https://vite.plus/ps1 | iex
+```
+
+macOS / Linux:
 
 ```sh
-npm install
+curl -fsSL https://vite.plus | bash
+```
+
+インストール後：
+
+```sh
+vp install
 npm run dev
 ```
 
-- ゲーム画面: http://localhost:3000
+- ゲーム画面: http://localhost:5173
 - Hono API: http://localhost:8787/health
 - API の豆知識: http://localhost:8787/api/game/tip
+
+Vite+ の開発・ビルド・チェックは `vp dev`、`vp build`、`vp check` でも実行できます。Hono API は並行して `npm run dev:api` で起動します。
 
 ## 曲目
 
@@ -29,13 +52,6 @@ npm run dev
 - 確認できていない音符を推測で埋めず、採譜状況を明記する。
 - 歌詞・踊り・地域的な歌い回しは、旋律データと区別して記録する。
 - ABC ファイルは曲ごとに `abc/` へ置く。
-
-## 技術構成
-
-- Frontend: Next.js App Router / React / TypeScript
-- API: Hono + Node adapter
-- UI: CSS、モバイル対応
-- Game: クライアント側の状態管理。プレイ結果を Hono API に送信
 
 ## ABC notation
 
