@@ -27,26 +27,39 @@ main{max-width:900px;margin:auto;padding:24px 18px 100px}.intro{display:flex;gap
 <section class="result" id="result" hidden aria-live="polite"><h2>選んだ曲 🎵</h2><div id="chosen"></div><p class="fine">この内容はこの端末に保存された控えです。共有投票の集計結果ではありません。</p><button id="clear" type="button">選択をやり直す</button></section>
 <footer>民謡ABC 100曲プロジェクト｜候補曲は編集用の仮リストです。地域・曲名・教科書掲載状況・出典を確認し、最終的な収録曲は投票結果と編集方針をもとに決定します。</footer>
 </main>
+<script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
 <script>
-const songs=[
-["安来節","島根県・中国","中国"],["こきりこ節","富山県・五箇山","中部・北陸"],["あんたがたどこさ","熊本県ゆかりの手まり歌","九州・沖縄"],["ソーラン節","北海道","北海道・東北"],["江差追分","北海道","北海道・東北"],["津軽じょんがら節","青森県","北海道・東北"],["南部牛追唄","岩手県","北海道・東北"],["秋田音頭","秋田県","北海道・東北"],["花笠音頭","山形県","北海道・東北"],["会津磐梯山","福島県","北海道・東北"],["八木節","群馬県・栃木県","関東"],["木更津甚句","千葉県","関東"],["ちゃっきり節","静岡県","中部・北陸"],["越中おわら節","富山県","中部・北陸"],["山中節","石川県","中部・北陸"],["郡上おどり（かわさき）","岐阜県","中部・北陸"],["伊勢音頭","三重県","近畿"],["河内音頭","大阪府","近畿"],["串本節","和歌山県","近畿"],["音戸の舟唄","広島県","中国"],["貝殻節","鳥取県","中国"],["阿波踊り（よしこの）","徳島県","四国"],["よさこい節","高知県","四国"],["黒田節","福岡県","九州・沖縄"],["炭坑節","福岡県","九州・沖縄"],["鹿児島おはら節","鹿児島県","九州・沖縄"]];
-const list=document.querySelector("#songs"),counter=document.querySelector("#counter"),submit=document.querySelector("#submit"),actionText=document.querySelector("#actionText");
-const saved=new Set(JSON.parse(localStorage.getItem("myoabc-vote-draft")||"[]"));
-songs.forEach((s,i)=>{const label=document.createElement("label");label.className="song";label.dataset.search=(s[0]+" "+s[1]+" "+s[2]).toLowerCase();label.dataset.region=s[2];label.innerHTML='<input type="checkbox" value="'+i+'" aria-label="'+s[0]+'"><span><span class="num">CANDIDATE '+String(i+1).padStart(2,"0")+'</span><strong>'+s[0]+'</strong><small>'+s[1]+'</small></span>';label.querySelector("input").checked=saved.has(i);list.append(label)});
-function update(){const checked=[...list.querySelectorAll("input:checked")];counter.textContent=checked.length+" / 5 曲";submit.disabled=checked.length===0;actionText.textContent=checked.length===5?"5曲を選択中。保存できます。":checked.length+"曲を選択中。あと"+(5-checked.length)+"曲選べます。";list.querySelectorAll("input:not(:checked)").forEach(el=>el.disabled=checked.length>=5)}
+const LIFF_ID = "REPLACE_WITH_LIFF_ID";
+const API_BASE = "REPLACE_WITH_WORKER_URL";
+const list=document.querySelector("#songs"), counter=document.querySelector("#counter"), submit=document.querySelector("#submit"), actionText=document.querySelector("#actionText");
+let campaign=null, songs=[], idToken=null;
+const results=document.createElement("section");
+results.className="result"; results.id="liveResults"; results.innerHTML="<h2>いまの投票結果</h2><p>集計を読み込んでいます…</p>"; document.querySelector("main").insertBefore(results,document.querySelector("#result"));
+const status=document.createElement("p"); status.className="fine"; status.id="authStatus"; status.textContent="LINEログインを確認しています…"; document.querySelector(".notice").after(status);
+function api(path, options={}) {
+ if (!API_BASE || API_BASE.startsWith("REPLACE_")) throw new Error("API URLが未設定です。運営がデプロイ設定を完了するまで投票できません。");
+ return fetch(API_BASE.replace(/\/$/,"")+path,{...options,headers:{"content-type":"application/json",...(idToken?{authorization:"Bearer "+idToken}:{}),...(options.headers||{})}}).then(async r=>{const data=await r.json();if(!r.ok)throw new Error(data.error||"通信に失敗しました");return data});
+}
+function renderSongs(){
+ list.replaceChildren();
+ songs.forEach((s,i)=>{const label=document.createElement("label");label.className="song";label.dataset.search=(s.title+" "+(s.region||"")+" "+(s.area||"")).toLowerCase();label.dataset.region=s.area||"";
+ const input=document.createElement("input");input.type="checkbox";input.value=s.id;input.setAttribute("aria-label",s.title);
+ const span=document.createElement("span"),num=document.createElement("span"),strong=document.createElement("strong"),small=document.createElement("small");
+ num.className="num";num.textContent="CANDIDATE "+String(i+1).padStart(2,"0");strong.textContent=s.title;small.textContent=[s.region,s.area].filter(Boolean).join(" · ");
+ span.append(num,strong,small);label.append(input,span);list.append(label);
+ });
+ update();
+}
+function update(){const checked=[...list.querySelectorAll("input:checked")];counter.textContent=checked.length+" / "+(campaign?.max_songs_per_vote||5)+" 曲";submit.disabled=!checked.length||!idToken;actionText.textContent=checked.length+"曲を選択中。";list.querySelectorAll("input:not(:checked)").forEach(el=>el.disabled=checked.length>=(campaign?.max_songs_per_vote||5));}
 list.addEventListener("change",e=>{if(e.target.matches("input"))update()});
 function filter(){const q=document.querySelector("#search").value.toLowerCase().trim(),r=document.querySelector("#region").value;list.querySelectorAll(".song").forEach(el=>el.hidden=!(el.dataset.search.includes(q)&&(!r||el.dataset.region===r)))}
 document.querySelector("#search").addEventListener("input",filter);document.querySelector("#region").addEventListener("change",filter);
-document.querySelector("#voteForm").addEventListener("submit",e=>{e.preventDefault();const ids=[...list.querySelectorAll("input:checked")].map(el=>Number(el.value));localStorage.setItem("myoabc-vote-draft",JSON.stringify(ids));document.querySelector("#chosen").innerHTML=ids.map(i=>"<p>"+(i+1)+". "+songs[i][0]+" <span class='fine'>"+songs[i][1]+"</span></p>").join("");document.querySelector("#result").hidden=false;document.querySelector("#result").scrollIntoView({behavior:"smooth",block:"nearest"})});
-document.querySelector("#clear").addEventListener("click",()=>{list.querySelectorAll("input").forEach(el=>{el.checked=false;el.disabled=false});localStorage.removeItem("myoabc-vote-draft");document.querySelector("#result").hidden=true;update()});
-update();
-
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js").catch(error => {
-      console.warn("PWAのオフライン機能を登録できませんでした", error);
-    });
-  });
-}
+async function loadResults(){if(!campaign)return;try{const data=await api("/api/results?campaignId="+encodeURIComponent(campaign.id));results.innerHTML="<h2>いまの投票結果</h2><p><strong>投票人数："+data.totalVotes+"人</strong></p>"+data.results.map((s,i)=>"<div style='margin:12px 0'><strong>"+(i+1)+". "+escapeHtml(s.title)+"</strong><span class='fine'>　"+s.votes+"票</span><div style='height:8px;background:#e6dfd2;border-radius:9px;overflow:hidden'><div style='height:100%;width:"+(data.results[0]?.votes?Math.round(s.votes/data.results[0].votes*100):0)+"%;background:#b84935'></div></div></div>").join("")+"<p class='fine'>投票結果は約10秒ごとに更新されます。</p>";}catch(e){results.innerHTML="<h2>いまの投票結果</h2><p>"+escapeHtml(e.message)+"</p>";}}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+document.querySelector("#voteForm").addEventListener("submit",async e=>{e.preventDefault();if(!campaign||!idToken)return;const songIds=[...list.querySelectorAll("input:checked")].map(el=>el.value);submit.disabled=true;actionText.textContent="投票を送信しています…";try{const data=await api("/api/vote",{method:"POST",body:JSON.stringify({campaignId:campaign.id,songIds})});document.querySelector("#chosen").textContent=songIds.map(id=>songs.find(s=>s.id===id)?.title).filter(Boolean).join("、");document.querySelector("#result").hidden=false;document.querySelector("#result").querySelector("h2").textContent="投票ありがとう！ 雑誌が解放されました";document.querySelector("#result").querySelector(".fine").textContent="解放された号："+data.unlockedIssueId+"。雑誌カタログから読むことができます。";status.textContent="投票を受け付けました。";await loadResults();}catch(err){status.textContent=err.message;}finally{update();}});
+document.querySelector("#clear").addEventListener("click",()=>{list.querySelectorAll("input").forEach(el=>{el.checked=false;el.disabled=false});document.querySelector("#result").hidden=true;update()});
+async function start(){try{if(LIFF_ID.startsWith("REPLACE_")||API_BASE.startsWith("REPLACE_")){status.textContent="LINE LIFF IDとAPI URLの設定待ちです。";results.innerHTML="<h2>リアルタイム集計</h2><p>APIのデプロイ後に表示されます。</p>";return;}await liff.init({liffId:LIFF_ID});if(!liff.isLoggedIn()){status.textContent="投票・推薦にはLINEログインが必要です。";const b=document.createElement("button");b.textContent="LINEでログイン";b.onclick=()=>liff.login();status.append(" ",b);return;}idToken=liff.getIDToken();if(!idToken){status.textContent="LINE IDトークンを取得できません。LIFF設定を確認してください。";return;}const data=await api("/api/campaign");campaign=data.campaign;songs=data.songs||[];if(!campaign){status.textContent="現在、受付中の投票企画はありません。曲の推薦をご利用ください。";}else{status.textContent="LINEログイン済み · "+campaign.title;renderSongs();await loadResults();setInterval(loadResults,10000);} }catch(e){status.textContent="初期化エラー："+e.message;}}
+start();
+if ("serviceWorker" in navigator) window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(e=>console.warn("PWA registration failed",e)));
 </script>
 </body></html>

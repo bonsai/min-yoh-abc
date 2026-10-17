@@ -1,0 +1,118 @@
+openapi: 3.1.0
+info:
+  title: Minyo ABC Public Song Catalog API
+  version: 1.0.0
+  summary: Public song metadata consumed by Neo Minyo Land.
+  description: |
+    The authoritative song catalog belongs to Minyo ABC. Neo Minyo Land owns
+    only map spots, coordinates, and game links. This endpoint exposes public
+    song metadata only; it must never expose votes, LINE identifiers, or raw
+    recommendations.
+servers:
+  - url: https://{workerHost}
+    description: Deployed Minyo ABC Cloudflare Worker
+    variables:
+      workerHost:
+        default: YOUR-DEPLOYED-ABC-WORKER.workers.dev
+paths:
+  /api/songs.jsonl:
+    get:
+      operationId: listPublicSongsJsonl
+      summary: List published public song metadata as JSONL
+      description: |
+        Returns one JSON object per line (NDJSON/JSONL). Clients must split on
+        line breaks, ignore empty lines, and parse each remaining line as a
+        Song. The response is a stream-like text representation, not a JSON array.
+      responses:
+        '200':
+          description: Public song catalog, one Song object per line.
+          headers:
+            Cache-Control:
+              description: Caching policy for the public catalog.
+              schema:
+                type: string
+            Access-Control-Allow-Origin:
+              description: CORS policy allowing the static Land site to fetch the catalog.
+              schema:
+                type: string
+          content:
+            application/x-ndjson:
+              schema:
+                type: string
+              examples:
+                twoSongs:
+                  summary: Two JSONL records
+                  value: |
+                    {"id":"yasugi-bushi","title":"安来節","region":"島根県","area":"中国","description":"島根県安来地方の民謡。","source_url":null,"status":"published"}
+                    {"id":"kawachi-ondo","title":"河内音頭","region":"大阪府","area":"近畿","description":"大阪府河内地方の民謡。","source_url":null,"status":"published"}
+            text/plain:
+              schema:
+                type: string
+              example: |
+                {"id":"yasugi-bushi","title":"安来節","region":"島根県","area":"中国","description":"島根県安来地方の民謡。","source_url":null,"status":"published"}
+        '500':
+          description: Unexpected server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Song:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - title
+        - region
+        - area
+        - description
+        - source_url
+        - status
+      properties:
+        id:
+          type: string
+          minLength: 1
+          description: Stable identifier referenced by Land's spots.json songId.
+          example: yasugi-bushi
+        title:
+          type: string
+          minLength: 1
+          example: 安来節
+        region:
+          type: string
+          example: 島根県
+        area:
+          type: string
+          example: 中国
+        description:
+          type: string
+          description: Public explanatory text; may be empty.
+        source_url:
+          type:
+            - string
+            - 'null'
+          format: uri
+        status:
+          type: string
+          const: published
+    Error:
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          type: string
+        requestId:
+          type: string
+x-jsonl-contract:
+  lineFormat: one JSON object per line
+  blankLines: ignored by consumers
+  duplicateIds: forbidden
+  idStability: IDs are stable and must not be repurposed for another song
+  privacy:
+    allowed: public song metadata only
+    forbidden:
+      - votes
+      - LINE identifiers
+      - raw recommendations
