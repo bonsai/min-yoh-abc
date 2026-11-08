@@ -1,0 +1,21 @@
+{
+  "id": "./",
+  "name": "民謡ABC｜みんなで選ぶ26曲",
+  "short_name": "民謡ABC",
+  "description": "民謡ABCの収録曲を考える人気投票の試作アプリ",
+  "lang": "ja",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f7f2e8",
+  "theme_color": "#263d36",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

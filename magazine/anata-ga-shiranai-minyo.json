@@ -1,0 +1,92 @@
+{
+  "series_title": "あなたが知らない民謡の世界",
+  "series_id": "anata-ga-shiranai-minyo",
+  "content_status": "draft",
+  "purpose": "日本の民謡・わらべ歌を、やさしい日本語と簡潔な英語で紹介し、クイズで理解を確認する。動画・雑誌など各媒体向けの加工は、この共通原稿を元に行う。",
+  "editorial_rules": [
+    "事実として断定する内容は信頼できる資料で確認し、出典を記録する。",
+    "曲の由来・歌われる場面と、個々の歌詞の意味を混同しない。",
+    "地域や演奏形に複数の説・違いがある場合は、そのことを明記する。",
+    "各曲の理解度チェックは6問に統一する。",
+    "英語は短く、学習者に伝わりやすい表現にする。"
+  ],
+  "items": [
+    {
+      "id": "001-yasugi-bushi",
+      "title": "安来節",
+      "reading": "やすぎぶし",
+      "english_title": "Yasugi Bushi",
+      "region": "島根県・安来地方",
+      "category": "民謡",
+      "short_japanese": "安来節は、島根県安来地方に伝わる民謡です。「どじょうすくい」の踊りでもよく知られています。歌や囃子、踊りを通して地域の芸能にふれられます。",
+      "short_english": "Yasugi Bushi is a folk song from the Yasugi area of Shimane, Japan. It is well known for the comic Dojo Sukui dance.",
+      "fact_check_notes": [
+        "「どじょうすくい」の踊りと、歌そのものの歴史・演奏形は分けて説明する。",
+        "採譜する場合は基準となる録音・楽譜を選び、出典と演奏形を記録する。"
+      ],
+      "sources": [
+        {"title": "安来節保存会 — 安来節概要", "url": "https://y-hozon.com/about/"},
+        {"title": "安来市観光ガイド — 安来節・どじょうの町", "url": "https://yasugi-kankou.com/yasugi-guide/yasugibushi/"},
+        {"title": "mu-tech — 安来節の楽譜・歌詞・試聴", "url": "https://mu-tech.org/Traditional/yasuki_bushi.html"}
+      ],
+      "quiz": [
+        "安来節が伝わる地域はどこでしょう？",
+        "安来節で特によく知られている踊りは何でしょう？",
+        "安来節は、歌だけでなく何と結びついて親しまれているでしょう？",
+        "民謡を調べるとき、旋律の出典を記録するのはなぜでしょう？",
+        "踊りの説明と歌そのものの歴史は、どのように扱うとよいでしょう？",
+        "安来節について確かな情報を得るには、どのような資料を確認するとよいでしょう？"
+      ]
+    },
+    {
+      "id": "002-kokiriko-bushi",
+      "title": "こきりこ節",
+      "reading": "こきりこぶし",
+      "english_title": "Kokiriko Bushi",
+      "region": "富山県五箇山",
+      "category": "民謡",
+      "short_japanese": "こきりこ節は、富山県五箇山に伝わる民謡です。歌や踊りとともに受け継がれ、竹製の楽器「こきりこ」も知られています。歌詞や演奏を手がかりに、地域の文化を学べます。",
+      "short_english": "Kokiriko Bushi is a traditional folk song from Gokayama, Toyama, Japan. It is performed with singing and dancing, and is associated with a bamboo instrument called a kokiriko.",
+      "fact_check_notes": [
+        "「こきりこ」という名称が楽器名・歌名のどちらを指すか、文脈を明確にする。",
+        "歌われてきた場面や歌詞の意味は、出典を確認してから具体的に説明する。"
+      ],
+      "sources": [
+        {"title": "公開前に五箇山・こきりこ節の保存団体および公的観光・文化資料を確認する", "url": ""}
+      ],
+      "quiz": [
+        "こきりこ節が伝わる地域はどこでしょう？",
+        "こきりこ節に関連する竹製の楽器は何と呼ばれるでしょう？",
+        "こきりこ節は、歌とともにどのような表現で受け継がれてきたでしょう？",
+        "歌詞の意味を説明するとき、何を確認する必要があるでしょう？",
+        "地域の民謡を学ぶと、音楽以外にどのようなことを知る手がかりになるでしょう？",
+        "こきりこ節について説明を書く前に、どのような資料を調べるとよいでしょう？"
+      ]
+    },
+    {
+      "id": "003-antagata-dokosa",
+      "title": "あんたがたどこさ",
+      "reading": "あんたがたどこさ",
+      "english_title": "Antagata Dokosa",
+      "region": "熊本と結びつけて紹介されることがある。成立・伝承については要確認。",
+      "category": "わらべ歌",
+      "short_japanese": "「あんたがたどこさ」は、子どもの遊びと結びついて親しまれているわらべ歌です。歌のリズムに合わせて、まりつきなどの遊びをする形が知られています。歌詞の由来や地域との関係は、資料を確認して紹介します。",
+      "short_english": "“Antagata Dokosa” is a Japanese children's song often used with rhythmic play, such as bouncing a ball. Its origins and regional connections should be checked against reliable sources.",
+      "fact_check_notes": [
+        "熊本との関係や歌詞の成立については、広く流布する説明だけで断定せず、信頼できる資料で確認する。",
+        "遊び方には地域差・世代差があり得るため、一つの方法だけを唯一の形として扱わない。"
+      ],
+      "sources": [
+        {"title": "公開前に公的文化資料・民俗学資料・児童文化資料を確認する", "url": ""}
+      ],
+      "quiz": [
+        "「あんたがたどこさ」は、一般にどのような種類の歌として知られているでしょう？",
+        "この歌は、どのような子どもの遊びと結びついていますか？",
+        "歌のリズムに合わせて遊ぶと、どのような要素を楽しめるでしょう？",
+        "歌の成立や地域との関係を紹介する前に、何を確認すべきでしょう？",
+        "遊び方に地域差がある場合、記事ではどのように説明するとよいでしょう？",
+        "わらべ歌を学ぶことで、音楽以外にどのような文化を知ることができるでしょう？"
+      ]
+    }
+  ]
+}
