@@ -1,29 +1,27 @@
-# MyoABC
+# MyoABC（移転しました）
 
-日本の民謡を、曲ごとの資料として記録・編集するための教材／出版物リポジトリです。
+このリポジトリの内容は、2026-11-08 の民謡プロジェクト再編で **[bonsai/neo-minyo-land](https://github.com/bonsai/neo-minyo-land)** へ統合されました。
+今後の編集・Issue・デプロイはすべて land 側で行います（DBはひとつ、デプロイもひとつ）。
 
-## 役割
+## 移転先マップ（land 内部の部門）
 
-- 民謡の書誌情報、地域、由来、背景、参考資料を曲ごとに整理する。
-- ABC notation などの楽曲データを、確認状況と出典を明記して管理する。
-- 本、教材、記事などの出版コンテンツを作る。
-- ゲームやイベントなどの体験機能は、このリポジトリに含めず [Neo民謡ランド](https://github.com/bonsai/neo-minyo-land) 側で開発する。
+| 旧 min-yoh-abc の置き場 | 移転先（neo-minyo-land） |
+|---|---|
+| `magazine/`（zine・WEB BOOK・企画書・クイズ正本） | `editorial/`（編集部） |
+| `songs/`（曲データ・schema） | `songs/`（そのまま） |
+| `songs/quiz/`（レシート型・民謡クイズPWA） | `school/quiz/`（スクール） |
+| `songs/vote/`（投票PWA） | `songs/vote/`（そのまま） |
+| （旧 bonsai/neo-minyo の playlist.json） | `radio/`（ラジオ）／運用は land Issue #23 |
+| （旧 bonsai/minyo-db のIssue 3件） | land Issue #24–#26（スクール／民謡カード） |
 
-## 曲目
+## このリポジトリに残っているもの
 
-1. [安来節（どじょうすくい）](songs/001-yasugi-bushi.md)
+- `docs/` — 過去の提案・方針ドキュメント（アーカイブ）
+- `index.html` — 移転案内ページ（GitHub Pages で公開）
+- Issue #1 — 移転時点で open のまま保留（land 側で扱うか未決定）
 
-## 編集方針
+## 経緯
 
-- 旋律は信頼できる楽譜・録音を参照して採譜し、出典を記録する。
-- 確認できていない音符を推測で埋めず、採譜状況を明記する。
-- 歌詞・踊り・地域的な歌い回しは、旋律データと区別して記録する。
-- ABC ファイルは曲ごとに `abc/` へ置き、確認状況と出典を添える。
-- ランド側とは、曲ID・教材ID・公開URLなどの参照情報で疎結合に連携する。
-
-## 公開ページ（GitHub Pages）
-
-- トップ: https://bonsai.github.io/min-yoh-abc/
-- 雑誌（WEB BOOK）: https://bonsai.github.io/min-yoh-abc/magazine/
-- レシート型・民謡クイズ: https://bonsai.github.io/min-yoh-abc/songs/quiz/
-- 投票（みんなで選ぶ26曲）: https://bonsai.github.io/min-yoh-abc/songs/vote/
+- 2026-10-12 リポジトリ作成（民謡の書誌・教材／出版プロジェクト）
+- 2026-11-05 zine 企画書・原稿メモを追加、Private 化
+- 2026-11-08 Public に復帰 → 同日、neo-minyo-land をハブとする monorepo へ再編・移転
