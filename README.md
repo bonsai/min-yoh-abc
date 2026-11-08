@@ -20,3 +20,10 @@
 - 歌詞・踊り・地域的な歌い回しは、旋律データと区別して記録する。
 - ABC ファイルは曲ごとに `abc/` へ置き、確認状況と出典を添える。
 - ランド側とは、曲ID・教材ID・公開URLなどの参照情報で疎結合に連携する。
+
+## 公開ページ（GitHub Pages）
+
+- トップ: https://bonsai.github.io/min-yoh-abc/
+- 雑誌（WEB BOOK）: https://bonsai.github.io/min-yoh-abc/magazine/
+- レシート型・民謡クイズ: https://bonsai.github.io/min-yoh-abc/songs/quiz/
+- 投票（みんなで選ぶ26曲）: https://bonsai.github.io/min-yoh-abc/songs/vote/
