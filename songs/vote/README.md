@@ -5,7 +5,7 @@
 
 ## 公開先
 GitHub Pages がリポジトリのルートを公開している場合：
-https://bonsai.github.io/min-yoh-abc/vote/
+https://bonsai.github.io/min-yoh-abc/songs/vote/
 
 ## PWA機能
 - スマートフォンの画面幅に対応
